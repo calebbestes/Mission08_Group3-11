@@ -7,4 +7,8 @@
     <RootNamespace>Mission08_Group3_11</RootNamespace>
   </PropertyGroup>
 
+  <ItemGroup>
+    <Folder Include="Models\" />
+  </ItemGroup>
+
 </Project>

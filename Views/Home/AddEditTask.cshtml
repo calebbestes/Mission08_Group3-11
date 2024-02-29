@@ -6,9 +6,30 @@
 Build a View that lists out all the tasks, laid out on the screen in Quadrants. Allow the user to
 Update and Delete the tasks and also to mark as Completed. Only display tasks that have not
 been completed. Create a navigation menu to navigate between each view. *@
-@* @model.Task
- *@
+@* @model Task
+
  <form method="post">
-    <label placeholder="Task Name">Add Task: </label>
-    <input />
-</form>
+    <h1>Add Task</h1>
+    <label asp-for="taskName" ></label>
+    <input placeholder="Task Name" />
+    <label asp-for="dueDate" ></label>
+    <input placeholder="Date" />
+    <label asp-for="quadrant "></label>
+    <input placeholder="Quadrant" />
+    <label asp-for="category"></label>
+    <input placeholder="Category" />
+    <label asp-for="completed"></label>
+    <select>
+        <option value ="True">True</option>
+        <option value ="False">False</option>
+    </select>
+</form> *@
+
+
+
+
+Task (Required)
+• Due Date
+• Quadrant (Required)
+• Category (Dropdown containing options: Home, School, Work, Church)
+• Completed (True/False)

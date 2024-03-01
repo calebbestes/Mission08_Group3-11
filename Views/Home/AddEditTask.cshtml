@@ -2,35 +2,46 @@
     For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 *@
 @{
-}@* 
-Build a View that lists out all the tasks, laid out on the screen in Quadrants. Allow the user to
-Update and Delete the tasks and also to mark as Completed. Only display tasks that have not
-been completed. Create a navigation menu to navigate between each view. *@
-@model Task
+}
 
- <form method="post">
-    <h1>Add Task</h1>
-    <label asp-for="taskName" ></label>
-    <input asp-for="taskName" />
-    <br />
-    <label asp-for="dueDate" ></label>
-    <input asp-for="dueDate" />
-    <br />
-    <label asp-for="quadrant"></label>
-    <input asp-for="quadrant" />
-    <br />
+@model Application
+
+<h1>Add a Task </h1>
+
+<form method="post">
+
+    <input type="hidden" asp-for="TaskId" />
+
+    <label asp-for="Task">Task:</label>
+    <input asp-for="Task"/>
+    <br/>
+
+    <label asp-for="DueDate">Due Date:</label>
+    <input asp-for="DueDate" />
+    <br/>
+
+    <label asp-for="Quadrant">Quadrant:</label>
+    <input asp-for="Quadrant"/>
+    <br/>
+
     <select asp-for="CategoryId">
         <option value="">Select a Category</option>
-        @foreach (Category c in ViewBag.Categories)
+       @foreach (Category m in ViewBag.Categories)
         {
-            <option value="@c.CategoryId">@c.CategoryName</option>
+            <option value="@m.CategoryId">@m.CategoryName</option>
         }
     </select>
     <br />
-    <label asp-for="completed"></label>
-    <select asp-for="completed">
-        <option value ="True">True</option>
-        <option value ="False">False</option>
-    </select>
-</form>
 
+    <label asp-for="Completed">Completed:</label>
+    <select asp-for="Completed">
+        <option value="true">Yes</option>
+        <option value="false">No</option>
+    </select>
+    <br/>
+
+    <div asp-validation-summary="All"></div>
+
+    <button type="submit">Submit Application</button>
+
+</form>

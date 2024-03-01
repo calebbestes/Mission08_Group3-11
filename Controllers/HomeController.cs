@@ -1,4 +1,5 @@
 using System.Diagnostics;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Mvc;
 using Mission08_Group3_11.Models;
 
@@ -55,7 +56,7 @@ namespace Mission08_Group3_11.Controllers
                 .Include(x => x.Category)
                 .ToList();
 
-            return View();// all_tasks);
+            return View(all_tasks);// all_tasks);
         }
 
         // Edit a movie
@@ -73,7 +74,7 @@ namespace Mission08_Group3_11.Controllers
         }
 
         [HttpPost]
-        public IActionResult Edit(TASKSModel updatedInfo)
+        public IActionResult Edit(Application updatedInfo)
         {
             _context.Update(updatedInfo);
             _context.SaveChanges();
@@ -92,7 +93,7 @@ namespace Mission08_Group3_11.Controllers
         }
 
         [HttpPost]
-        public IActionResult Delete(TASKSModel toDelete)
+        public IActionResult Delete(Application toDelete)
         {
             _context.ToDoList.Remove(toDelete);
             _context.SaveChanges();

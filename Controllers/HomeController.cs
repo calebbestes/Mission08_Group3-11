@@ -1,103 +1,103 @@
 using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
-//using Mission08_Group3_11.Models;
+using Mission08_Group3_11.Models;
 
 namespace Mission08_Group3_11.Controllers
 {
     public class HomeController : Controller
     {
-        //private BlahContext _context;
+        private ToDoListContext _context;
 
-        //public HomeController(BlahContext temp) // Constructor
-        //{
-        //    _context = temp;
-        //}
+        public HomeController(ToDoListContext temp) // Constructor
+        {
+            _context = temp;
+        }
 
         public IActionResult Index()
         {
             return View();
         }
 
-        //[HttpGet]
-        //public IActionResult TASKADDER()
-        //{
-        //    ViewBag.TABLENAMEquad = _context.TABLENAMEquad
-        //        .OrderBy(x => x.COLUMNNAME)
-        //        .ToList();
+        [HttpGet]
+        public IActionResult AddEditTask()
+        {
+            ViewBag.Categories = _context.Categories
+                .OrderBy(x => x.CategoryName)
+                .ToList();
 
-        //    return View("TASKADDER", new TASKMODEL());
-        //}
+            return View("TASKADDER", new Application());
+        }
 
-        //[HttpPost]
-        //public IActionResult TASKADDER(TASKMODEL response)
-        //{
-        //    if (ModelState.IsValid)
-        //    {
-        //        _context.TABLENAMEtasks.Add(response); // Add record to the database
-        //        _context.SaveChanges();
+        [HttpPost]
+        public IActionResult AddEditTask(Application response)
+        {
+            if (ModelState.IsValid)
+            {
+                _context.ToDoList.Add(response); // Add record to the database
+                _context.SaveChanges();
 
-        //        return View("Confirmation", response);
-        //    }
-        //    else // Invalid data
-        //    {
-        //        ViewBag.TABLENAMEquad = _context.TABKENAMEquad
-        //            .OrderBy(x => x.COLUMNNAME)
-        //            .ToList();
+                return View("Quadrants", response);
+            }
+            else // Invalid data
+            {
+                ViewBag.Categories = _context.Categories
+                    .OrderBy(x => x.CategoryName)
+                    .ToList();
 
-        //        return View(response);
-        //    }
-        //}
+                return View(response);
+            }
+        }
 
-        //public IActionResult TASKS()
-        //{
-        //    // Linq
-        //    var all_movies = _context.TABLENAMEtask
-        //        .Include(x => x.TABLENAMEquad)
-        //        .ToList();
+        public IActionResult Quadrants()
+        {
+            // Linq
+            var all_tasks = _context.ToDoList
+                .Include(x => x.Category)
+                .ToList();
 
-        //    return View(all_movies);
-        //}
+            return View();// all_tasks);
+        }
 
-        //// Edit a movie
-        //[HttpGet]
-        //public IActionResult Edit(int id)
-        //{
-        //    var recordToEdit = _context.Movies
-        //        .Single(x => x.MovieId == id);
+        // Edit a movie
+        [HttpGet]
+        public IActionResult Edit(int id)
+        {
+            var recordToEdit = _context.ToDoList
+                .Single(x => x.TaskId == id);
 
-        //    ViewBag.Categories = _context.Categories
-        //        .OrderBy(x => x.CategoryName)
-        //        .ToList();
+            ViewBag.Categories = _context.Categories
+                .OrderBy(x => x.CategoryName)
+                .ToList();
 
-        //    return View("MovieAdder", recordToEdit);
-        //}
+            return View("AddEditTask", recordToEdit);
+        }
 
-        //[HttpPost]
-        //public IActionResult Edit(MovieViewModel updatedInfo)
-        //{
-        //    _context.Update(updatedInfo);
-        //    _context.SaveChanges();
+        [HttpPost]
+        public IActionResult Edit(TASKSModel updatedInfo)
+        {
+            _context.Update(updatedInfo);
+            _context.SaveChanges();
 
-        //    return RedirectToAction("Movies");
-        //}
+            return RedirectToAction("Quadrants");
+        }
 
-        //// Delete a movie
-        //[HttpGet]
-        //public IActionResult Delete(int id)
-        //{
-        //    var recordToDelete = _context.Movies
-        //        .Single(x => x.MovieId == id);
+        // Delete a movie
+        [HttpGet]
+        public IActionResult Delete(int id)
+        {
+            var recordToDelete = _context.ToDoList
+                .Single(x => x.TaskId == id);
 
-        //    return View(recordToDelete);
-        //}
+            return View(recordToDelete);
+        }
 
-        //[HttpPost]
-        //public IActionResult Delete(MovieViewModel toDelete)
-        //{
-        //    _context.Movies.Remove(toDelete);
-        //    _context.SaveChanges();
+        [HttpPost]
+        public IActionResult Delete(TASKSModel toDelete)
+        {
+            _context.ToDoList.Remove(toDelete);
+            _context.SaveChanges();
 
-        //    return RedirectToAction("Movies");
-        //}
+            return RedirectToAction("Quadrants");
+        }
     }
 }

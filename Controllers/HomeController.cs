@@ -26,7 +26,7 @@ namespace Mission08_Group3_11.Controllers
                 .OrderBy(x => x.CategoryName)
                 .ToList();
 
-            return View("TASKADDER", new Application());
+            return View("AddEditTask", new Application());
         }
 
         [HttpPost]

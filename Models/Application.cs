@@ -6,6 +6,7 @@ namespace Mission08_Group3_11.Models
     public class Application
 
     {
+        [Key]
         public int TaskId { get; set; }
         public int Task { get; set; }
         public int DueDate { get; set; }

@@ -8,11 +8,13 @@ namespace Mission08_Group3_11.Models
     {
         [Key]
         [Required]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int TaskId { get; set; }
         [Required]
-        public int Task { get; set; }
+        public string Task { get; set; }
         public DateTime DueDate { get; set; }
         [Required]
+        [Range(1,4, ErrorMessage = "Quadrant must be a number between 1 and 4")]
         public int Quadrant { get; set; }
 
         [ForeignKey("CategoryId")]

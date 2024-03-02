@@ -22,9 +22,9 @@ namespace Mission08_Group3_11.Controllers
         [HttpGet]
         public IActionResult AddEditTask()
         {
-            ViewBag.Categories = _context.Categories
-                .OrderBy(x => x.CategoryName)
-                .ToList();
+            ViewBag.Categories = _context.Categories.ToList();
+                //.OrderBy(x => x.CategoryName)
+                //.ToList();
 
             return View("AddEditTask", new Application());
         }
@@ -37,7 +37,7 @@ namespace Mission08_Group3_11.Controllers
                 _context.ToDoList.Add(response); // Add record to the database
                 _context.SaveChanges();
 
-                return View("Quadrants", response);
+                return View("Confirmation", response);
             }
             else // Invalid data
             {
@@ -58,7 +58,7 @@ namespace Mission08_Group3_11.Controllers
             return View("Quadrants", all_tasks);// all_tasks);
         }
 
-        // Edit a movie
+        // Edit a task
         [HttpGet]
         public IActionResult Edit(int id)
         {
@@ -81,7 +81,7 @@ namespace Mission08_Group3_11.Controllers
             return RedirectToAction("Quadrants");
         }
 
-        // Delete a movie
+        // Delete a task
         [HttpGet]
         public IActionResult Delete(int id)
         {

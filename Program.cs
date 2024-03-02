@@ -11,6 +11,8 @@ builder.Services.AddDbContext<ToDoListContext>(options =>
     options.UseSqlite(builder.Configuration["ConnectionStrings:ToDoListConnection"]);
 });
 
+builder.Services.AddScoped<ITaskRepository, EFTaskRepository>();
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

@@ -7,22 +7,22 @@ namespace Mission08_Group3_11.Controllers
 {
     public class HomeController : Controller
     {
-        private ToDoListContext _context;
+        private ITaskRepository _repo;
 
-        public HomeController(ToDoListContext temp) // Constructor
+        public HomeController(ITaskRepository temp) // Constructor
         {
-            _context = temp;
+            _repo = temp;
         }
 
         public IActionResult Index()
         {
-            return View();
+            return View(new Application());
         }
 
         [HttpGet]
         public IActionResult AddEditTask()
         {
-            ViewBag.Categories = _context.Categories.ToList();
+            ViewBag.Categories = _repo.Categories.ToList();
                 //.OrderBy(x => x.CategoryName)
                 //.ToList();
 
@@ -34,14 +34,13 @@ namespace Mission08_Group3_11.Controllers
         {
             if (ModelState.IsValid)
             {
-                _context.ToDoList.Add(response); // Add record to the database
-                _context.SaveChanges();
+                _repo.AddTask(response); // Add record to the database
 
-                return View("Confirmation", response);
+                return View("Confirmation", new Application());
             }
             else // Invalid data
             {
-                ViewBag.Categories = _context.Categories
+                ViewBag.Categories = _repo.Categories
                     .OrderBy(x => x.CategoryName)
                     .ToList();
 
@@ -52,7 +51,7 @@ namespace Mission08_Group3_11.Controllers
         public IActionResult Quadrants()
         {
             // Linq
-            var all_tasks = _context.ToDoList
+            var all_tasks = _repo.ToDoList
                 .ToList();
 
             return View("Quadrants", all_tasks);// all_tasks);
@@ -62,10 +61,10 @@ namespace Mission08_Group3_11.Controllers
         [HttpGet]
         public IActionResult Edit(int id)
         {
-            var recordToEdit = _context.ToDoList
+            var recordToEdit = _repo.ToDoList
                 .Single(x => x.TaskId == id);
 
-            ViewBag.Categories = _context.Categories
+            ViewBag.Categories = _repo.Categories
                 .OrderBy(x => x.CategoryName)
                 .ToList();
 
@@ -75,8 +74,8 @@ namespace Mission08_Group3_11.Controllers
         [HttpPost]
         public IActionResult Edit(Application updatedInfo)
         {
-            _context.Update(updatedInfo);
-            _context.SaveChanges();
+            _repo.Update(updatedInfo);
+            _repo.SaveChanges();
 
             return RedirectToAction("Quadrants");
         }
@@ -85,7 +84,7 @@ namespace Mission08_Group3_11.Controllers
         [HttpGet]
         public IActionResult Delete(int id)
         {
-            var recordToDelete = _context.ToDoList
+            var recordToDelete = _repo.ToDoList
                 .Single(x => x.TaskId == id);
 
             return View(recordToDelete);
@@ -94,8 +93,8 @@ namespace Mission08_Group3_11.Controllers
         [HttpPost]
         public IActionResult Delete(Application toDelete)
         {
-            _context.ToDoList.Remove(toDelete);
-            _context.SaveChanges();
+            _repo.AddTask(toDelete);
+            _repo.SaveChanges();
 
             return RedirectToAction("Quadrants");
         }

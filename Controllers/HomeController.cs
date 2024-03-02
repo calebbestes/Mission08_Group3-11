@@ -88,7 +88,7 @@ namespace Mission08_Group3_11.Controllers
             var recordToDelete = _context.ToDoList
                 .Single(x => x.TaskId == id);
 
-            return View("Quadrants", recordToDelete);
+            return View(recordToDelete);
         }
 
         [HttpPost]

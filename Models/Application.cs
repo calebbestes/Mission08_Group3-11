@@ -11,7 +11,7 @@ namespace Mission08_Group3_11.Models
         public int TaskId { get; set; }
         [Required]
         public int Task { get; set; }
-        public int DueDate { get; set; }
+        public DateTime DueDate { get; set; }
         [Required]
         public int Quadrant { get; set; }
 

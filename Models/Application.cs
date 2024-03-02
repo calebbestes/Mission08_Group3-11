@@ -12,7 +12,8 @@ namespace Mission08_Group3_11.Models
         public int TaskId { get; set; }
         [Required]
         public string Task { get; set; }
-        public DateTime DueDate { get; set; }
+        [DataType(DataType.Date)]
+        public DateTime DueDate { get; set; } = DateTime.Today.AddDays(1);
         [Required]
         [Range(1,4, ErrorMessage = "Quadrant must be a number between 1 and 4")]
         public int Quadrant { get; set; }

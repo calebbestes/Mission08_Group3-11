@@ -13,14 +13,13 @@ namespace Mission08_Group3_11.Models
         [Required]
         public string Task { get; set; }
         [DataType(DataType.Date)]
-        public DateTime DueDate { get; set; } = DateTime.Today.AddDays(1);
+        public DateTime? DueDate { get; set; } = DateTime.Today.AddDays(1);
         [Required]
         [Range(1,4, ErrorMessage = "Quadrant must be a number between 1 and 4")]
         public int Quadrant { get; set; }
 
-        [ForeignKey("CategoryId")]
-        public int CategoryId { get; set; }
-        public Category Category { get; set; }
+        public int? CategoryId { get; set; }
+        public Category? Category { get; set; }
         public bool Completed { get; set; }
         
     }

@@ -53,10 +53,9 @@ namespace Mission08_Group3_11.Controllers
         {
             // Linq
             var all_tasks = _context.ToDoList
-                .Include(x => x.Category)
                 .ToList();
 
-            return View(all_tasks);// all_tasks);
+            return View("Quadrants", all_tasks);// all_tasks);
         }
 
         // Edit a movie
@@ -89,7 +88,7 @@ namespace Mission08_Group3_11.Controllers
             var recordToDelete = _context.ToDoList
                 .Single(x => x.TaskId == id);
 
-            return View(recordToDelete);
+            return View("Quadrants", recordToDelete);
         }
 
         [HttpPost]

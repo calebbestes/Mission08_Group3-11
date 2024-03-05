@@ -7,22 +7,32 @@ namespace Mission08_Group3_11.Controllers
 {
     public class HomeController : Controller
     {
-        private ToDoListContext _context;
+        private ITaskRepository _repo;
 
-        public HomeController(ToDoListContext temp) // Constructor
+        public HomeController(ITaskRepository temp) // Constructor
         {
-            _context = temp;
+            _repo = temp;
         }
 
         public IActionResult Index()
         {
-            return View();
+            var importantData = _repo.Categories;
+
+            var evenMoreImportantData = _repo.ToDoList;
+
+            return View(importantData); //this might be wrong!
+        }
+        [HttpPost]
+        public IActionResult Index(Application m)
+        {
+            _repo.DeleteApplication(m);
+            return View("AddEditTask"); //not sure
         }
 
         [HttpGet]
         public IActionResult AddEditTask()
         {
-            ViewBag.Categories = _context.Categories.ToList();
+            ViewBag.Categories = _repo.Categories.ToList();
                 //.OrderBy(x => x.CategoryName)
                 //.ToList();
 
@@ -34,14 +44,14 @@ namespace Mission08_Group3_11.Controllers
         {
             if (ModelState.IsValid)
             {
-                _context.ToDoList.Add(response); // Add record to the database
-                _context.SaveChanges();
+                _repo.ToDoList.Add(response); // Add record to the database
+                _repo.SaveChanges();
 
                 return View("Confirmation", response);
             }
             else // Invalid data
             {
-                ViewBag.Categories = _context.Categories
+                ViewBag.Categories = _repo.Categories
                     .OrderBy(x => x.CategoryName)
                     .ToList();
 
